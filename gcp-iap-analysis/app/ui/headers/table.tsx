@@ -3,16 +3,16 @@ import { getFilteredHeaders } from '@/app/lib/data';
 export default async function HeadersTable({
   query,
   currentPage,
-  headers,
   currentResultsPerPage,
+  filters,
 }: {
   query: string;
   currentPage: number;
-  headers: [string, string][];
   currentResultsPerPage: number;
+  filters: string;
 }) {
   const offset = currentResultsPerPage * (currentPage - 1);
-  const filteredHeaders = getFilteredHeaders(query);
+  const filteredHeaders = getFilteredHeaders(query, filters);
 
   return (
     <div className="mt-6 flow-root">
@@ -41,7 +41,7 @@ export default async function HeadersTable({
               </div>
             ))}
           </div>
-          <table className="hidden min-w-full text-gray-900 md:table">
+          <table className="hidden min-w-full md:table">
             <thead className="rounded-lg text-left text-sm font-normal">
               <tr className="flex">
                 <th scope="col" className="flex-none w-80 px-4 py-5 font-medium sm:pl-6">

@@ -10,11 +10,11 @@ export default function ResultsPerPage() {
   const pathname = usePathname();
   const searchParams = useSearchParams();
   const currentResultsPerPage = Number(searchParams.get('num')) || 5;
-  const allResultsPerPage = RESULTS_PER_PAGE;
   
   const createPageURL = (pageNumber: number | string) => {
     const params = new URLSearchParams(searchParams);
     params.set('num', pageNumber.toString());
+    params.set('page', "1");
     return `${pathname}?${params.toString()}`;
   };
 
@@ -23,12 +23,12 @@ export default function ResultsPerPage() {
       <div className="inline-flex">
 
         <div className="flex items-center -space-x-px">
-          {allResultsPerPage.map((page, index) => {
+          {RESULTS_PER_PAGE.map((page, index) => {
             let position: 'first' | 'last' | 'single' | 'middle' | undefined;
 
             if (index === 0) position = 'first';
-            if (index === allResultsPerPage.length - 1) position = 'last';
-            if (allResultsPerPage.length === 1) position = 'single';
+            if (index === RESULTS_PER_PAGE.length - 1) position = 'last';
+            if (RESULTS_PER_PAGE.length === 1) position = 'single';
 
             return (
               <PaginationNumber
@@ -62,7 +62,7 @@ function PaginationNumber({
     {
       'rounded-l-md': position === 'first' || position === 'single',
       'rounded-r-md': position === 'last' || position === 'single',
-      'z-10 bg-blue-500 border-blue-500 text-gray-50': isActive,
+      'z-10 bg-blue-400 border-blue-400 text-gray-100': isActive,
       'hover:bg-gray-100': !isActive && position !== 'middle',
       'text-gray-300': position === 'middle',
     },

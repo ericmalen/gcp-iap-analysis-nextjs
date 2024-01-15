@@ -16,8 +16,14 @@ export const GCP_IAP_HEADERS = [
     "x-serverless-authorization"
 ];
 
-export const RESULTS_PER_PAGE = [
+export const RESULTS_PER_PAGE: number[] = [
     5, 
     15, 
     30
+];
+
+export const FILTERS = [
+    "All", 
+    "IAP", 
+    "GCP"
 ];

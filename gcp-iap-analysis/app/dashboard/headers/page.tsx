@@ -2,11 +2,10 @@ import Pagination from '@/app/ui/pagination';
 import Search from '@/app/ui/search';
 import Table from '@/app/ui/headers/table';
 import ResultsPerPage from '@/app/ui/results-per-page';
-import { Suspense } from 'react';
 import { Metadata } from 'next';
 import { getFilteredHeaders } from '@/app/lib/data';
 import { getHeaderPages } from '@/app/lib/utils';
-import { ITEMS_PER_PAGE } from '@/app/lib/constants';
+import { FilterResults } from '@/app/ui/dropdown';
 
 export const metadata: Metadata = {
   title: 'Headers',
@@ -21,14 +20,18 @@ export default async function Page({
       query?: string;
       page?: string;
       num?: string;
+      filter?: string;
     };
   }) {
   
   const query = searchParams?.query || '';
   const currentPage = Number(searchParams?.page) || 1;
   const currentResultsPerPage = Number(searchParams?.num) || 5;
-  const headers = getFilteredHeaders(query);
+  const filter = searchParams?.filter || 'All';
+  const headers = getFilteredHeaders(query, filter);
   const totalPages = getHeaderPages(headers, currentResultsPerPage);
+  
+  //CREATE TYPE FOR TABLE VARIABLES
 
   return (
     <div className="w-full">
@@ -39,15 +42,18 @@ export default async function Page({
       
       <div className="mt-4 flex items-center justify-between gap-2 md:mt-8">
         <Search placeholder="Search headers..." />
+        <div className="h-10">
+          <FilterResults/>
+        </div>
+        
       </div>
  
-      <Table query={query} currentPage={currentPage} headers={headers} currentResultsPerPage={currentResultsPerPage}/>
+      <Table query={query} currentPage={currentPage} currentResultsPerPage={currentResultsPerPage} filters={filter}/>
       
       <div className="mt-5 flex items-center justify-center">
-        
         <div className="flex-1"></div>
          
-        <div className="mt-5 flex justify-center">
+        <div className="mt-5 justify-center">
           <Pagination totalPages={totalPages} />
         </div>
         
@@ -55,7 +61,6 @@ export default async function Page({
           <h3 className="flex items-center ml-2 mr-2 text-md text-gray-500 ">Results per page:</h3>
           <ResultsPerPage />
         </div>
-
       </div>
     </div>
   );
