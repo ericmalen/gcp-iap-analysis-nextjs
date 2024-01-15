@@ -1,19 +1,17 @@
-import Image from 'next/image';
-//import InvoiceStatus from '@/app/ui/invoices/status';
-import { ITEMS_PER_PAGE } from '@/app/lib/constants';
 import { getFilteredHeaders } from '@/app/lib/data';
 
-//CHECK SEARCH BUG ON PAGE RELOAD - RANDOM ENTRY BEING ADDED TO TABLE
 export default async function HeadersTable({
   query,
   currentPage,
-  headers
+  headers,
+  currentResultsPerPage,
 }: {
   query: string;
   currentPage: number;
-  headers: [string, string][]
+  headers: [string, string][];
+  currentResultsPerPage: number;
 }) {
-  const offset = ITEMS_PER_PAGE * (currentPage - 1);
+  const offset = currentResultsPerPage * (currentPage - 1);
   const filteredHeaders = getFilteredHeaders(query);
 
   return (
@@ -22,7 +20,7 @@ export default async function HeadersTable({
         {/* greyed out container holding the table */}
         <div className="rounded-lg bg-gray-100 p-2 md:pt-0">
           <div className="md:hidden">
-            {filteredHeaders?.slice(offset, offset + ITEMS_PER_PAGE).map((header) => (
+            {filteredHeaders?.slice(offset, offset + currentResultsPerPage).map((header) => (
               
               <div
                 key={header[0]}
@@ -55,7 +53,7 @@ export default async function HeadersTable({
               </tr>
             </thead>
             <tbody className="bg-gray-50">
-              {filteredHeaders?.slice(offset, offset + ITEMS_PER_PAGE).map((header) => (
+              {filteredHeaders?.slice(offset, offset + currentResultsPerPage).map((header) => (
                 <tr
                   key={header[0]}
                   className="flex w-full border-b py-3 text-sm last-of-type:border-none [&:first-child>td:first-child]:rounded-tl-lg [&:first-child>td:last-child]:rounded-tr-lg [&:last-child>td:first-child]:rounded-bl-lg [&:last-child>td:last-child]:rounded-br-lg"
@@ -65,7 +63,7 @@ export default async function HeadersTable({
                       <p>{header[0]}:</p>
                     </div>
                   </td>
-                  <td className="grow whitespace-wrap px-3 py-3">
+                  <td className="grow whitespace-wrap px-3 py-3 break-all">
                     {header[1]}
                   </td>
                 </tr>

@@ -1,6 +1,7 @@
-import Pagination from '@/app/ui/headers/pagination';
+import Pagination from '@/app/ui/pagination';
 import Search from '@/app/ui/search';
 import Table from '@/app/ui/headers/table';
+import ResultsPerPage from '@/app/ui/results-per-page';
 import { Suspense } from 'react';
 import { Metadata } from 'next';
 import { getFilteredHeaders } from '@/app/lib/data';
@@ -19,13 +20,15 @@ export default async function Page({
     searchParams?: {
       query?: string;
       page?: string;
+      num?: string;
     };
   }) {
   
   const query = searchParams?.query || '';
   const currentPage = Number(searchParams?.page) || 1;
+  const currentResultsPerPage = Number(searchParams?.num) || 5;
   const headers = getFilteredHeaders(query);
-  const totalPages = getHeaderPages(headers, ITEMS_PER_PAGE);
+  const totalPages = getHeaderPages(headers, currentResultsPerPage);
 
   return (
     <div className="w-full">
@@ -38,10 +41,21 @@ export default async function Page({
         <Search placeholder="Search headers..." />
       </div>
  
-      <Table query={query} currentPage={currentPage} headers={headers}/>
+      <Table query={query} currentPage={currentPage} headers={headers} currentResultsPerPage={currentResultsPerPage}/>
       
-      <div className="mt-5 flex w-full justify-center">
-        <Pagination totalPages={totalPages} />
+      <div className="mt-5 flex items-center justify-center">
+        
+        <div className="flex-1"></div>
+         
+        <div className="mt-5 flex justify-center">
+          <Pagination totalPages={totalPages} />
+        </div>
+        
+        <div className="flex-1 mt-5 flex justify-end">
+          <h3 className="flex items-center ml-2 mr-2 text-md text-gray-500 ">Results per page:</h3>
+          <ResultsPerPage />
+        </div>
+
       </div>
     </div>
   );
