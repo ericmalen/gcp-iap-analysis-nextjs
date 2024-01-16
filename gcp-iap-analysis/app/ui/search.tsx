@@ -22,7 +22,7 @@ export default function Search({ placeholder }: { placeholder: string }) {
   }, 300);
 
   return (
-    <div className="relative grow">
+    <div className="grow relative">
       <label htmlFor="search" className="sr-only">
         Search
       </label>
