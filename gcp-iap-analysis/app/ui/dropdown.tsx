@@ -37,7 +37,7 @@ export function FilterResults() {
       >
         {FILTERS.map((filter) => {
           return(
-            <Link key={filter} href={handleClick(filter)} className="flex justify-center items-center hover:bg-sky-100 my-0.5 w-full bg-gray-100 h-10 rounded-lg">
+            <Link key={filter} href={handleClick(filter)} className="flex justify-center items-center hover:bg-sky-100 my-0.5 w-full bg-gray-50 h-10 rounded-lg">
               <p className="text-sm">{filter}</p>
             </Link>  
           );

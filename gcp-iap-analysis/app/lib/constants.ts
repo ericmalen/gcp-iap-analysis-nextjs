@@ -1,5 +1,7 @@
 export const ITEMS_PER_PAGE = 5;
 
+export const IAP_HEADER_KEY = "x-goog-iap-jwt-assertion";
+
 export const GCP_HEADERS = [
     "traceparent", 
     "forwarded", 
