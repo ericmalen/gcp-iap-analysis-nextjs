@@ -28,7 +28,7 @@ export function FilterResults() {
       
       {/* HIDE THIS */}
       <div className={clsx(
-        "bg-gray-300 rounded-lg px-1 z-50",
+        "bg-gray-200 rounded-lg mt-0.5 px-0.5 z-50",
         {
           "": isOpen === true,
           "hidden": isOpen === false
@@ -37,8 +37,8 @@ export function FilterResults() {
       >
         {FILTERS.map((filter) => {
           return(
-            <Link key={filter} href={handleClick(filter)} className="flex justify-center items-center hover:bg-sky-100 my-1 w-full bg-gray-100 h-10 rounded-lg">
-              <p>{filter}</p>
+            <Link key={filter} href={handleClick(filter)} className="flex justify-center items-center hover:bg-sky-100 my-0.5 w-full bg-gray-100 h-10 rounded-lg">
+              <p className="text-sm">{filter}</p>
             </Link>  
           );
         })}
