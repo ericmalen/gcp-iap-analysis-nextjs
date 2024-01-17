@@ -3,7 +3,7 @@
 import {
   HomeIcon,
   ShareIcon,
-  UserIcon
+  CircleStackIcon
 } from '@heroicons/react/24/outline';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
@@ -12,8 +12,8 @@ import clsx from 'clsx';
 // add more links here
 const links = [
   { name: 'Home', href: '/dashboard', icon: HomeIcon },
-  { name: 'User Information', href: '/dashboard/user-info', icon: UserIcon },
   { name: 'Request Headers', href: '/dashboard/headers', icon: ShareIcon },
+  { name: 'JWT Payload', href: '/dashboard/jtw-payload', icon: CircleStackIcon },
 ];
 
 export default function NavLinks() {

@@ -61,10 +61,6 @@ export const revVerification = (verification: string) => {
     return [isValidated, hasToken];
 }
 
-// export const getRequestCardData = (): RequestCardData => {
-//     return ;
-// };
-
 //figure out types - perfect example
 export const getHeaderCardData = async () => {
     const allHeaders= headers();
@@ -77,4 +73,16 @@ export const getHeaderCardData = async () => {
     let iapJwtVerification = verification(hasIapJwt, iapVerified);
     
     return [totalHeadersCount, totalGcpHeaders, totalIapHeaders, iapJwtVerification];
+};
+
+export const getRequestCardData = (): (string | boolean)[] => {
+    const allHeaders= headers();
+    const hasIapJwt = allHeaders.has("x-goog-iap-jwt-assertion") || "No";
+    const host = allHeaders.has("host") ? String(allHeaders.get("host")?.split(":")[0]) : "N/A";
+    const location = allHeaders.has("x-client-geo-location") ? String(allHeaders.get("x-client-geo-location")) : "N/A";
+    const operatingSys = allHeaders.has("sec-ch-ua-platform") ? String(allHeaders.get("sec-ch-ua-platform")) : "N/A";
+    const userAgent = allHeaders.has("user-agent") ? String(allHeaders.get("user-agent")?.split("/")[0]) : "N/A";
+    console.log([host, location, hasIapJwt, operatingSys, userAgent]);
+    
+    return [host, location, hasIapJwt, operatingSys, userAgent];
 };

@@ -1,25 +1,30 @@
-import { getHeaderCardData, revVerification } from '@/app/lib/data';
+import { getHeaderCardData, getRequestCardData, revVerification } from '@/app/lib/data';
 import { HEADER_CARD_KEYS, REQUEST_CARD_KEYS } from '@/app/lib/constants';
 import VerificationStatus from '../verification-status';
 
 export default async function CardWrapper(){
     const headerCardData = await getHeaderCardData();
+    const requestCardData = await getRequestCardData();
 
     return (
       <>
-      <Card data={headerCardData} title="HTTP Request Information"/>
-      <Card data={headerCardData} title="Headers Information"/>
+      <Card type="req" data={requestCardData} title="HTTP Request Information"/>
+      <Card type="header" data={headerCardData} title="Headers Information"/>
       </>
     );
 }
-
+// CHECK NAV_LINKS FOR HOW TO DUPLICATE BETTER WITHOUT CONDITIONAL STATEMENT!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 export function Card({
+  type,
   title,
   data,
 }: {
+  type: string;
   title: string;
-  data: (string | number)[];
+  data: (string | number | boolean)[];
 }) {
+  
+  
   
   return (
     <>
@@ -31,9 +36,10 @@ export function Card({
           {/* body */}
           <div className="flex flex-col grow h-5/6 mx-2 mb-2 rounded-md bg-gray-100">
             {data.map((data, index) => {
-              return (
-                <CardField key={data} data={[HEADER_CARD_KEYS[index], data]}/>
-              )
+              return type === "req" ? (
+              <CardField key={index} data={[REQUEST_CARD_KEYS[index], String(data)]}/>
+              ) : 
+              <CardField key={index} data={[HEADER_CARD_KEYS[index], String(data)]}/>;
             })}
           </div>        
         </div>
@@ -49,7 +55,6 @@ export function CardField({
   let verificationValues = [false, false];
   if(data[0] === "IAP JTW Verification" && typeof data[1] === "string"){
     verificationValues = revVerification(data[1]);
-    //console.log(data[1])
   }
 
   return (
