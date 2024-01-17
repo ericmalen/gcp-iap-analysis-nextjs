@@ -29,3 +29,33 @@ export const FILTERS = [
     "IAP", 
     "GCP"
 ];
+
+export const DUMMY_DATA_1 = [
+    ["Host", " localhost | cloud run | IAP"], 
+    ["Location", "user location | N/A"],
+    ["Contains IAP JTW", "true | false"], 
+    ["Operating System", "os"],
+    ["User Agent", "user agent"]
+];
+
+export const REQUEST_CARD_KEYS = [
+    "Host",
+    "Location",
+    "Contains IAP JTW",
+    "Operating System",
+    "User Agent"
+];
+
+export const DUMMY_DATA_2 = [
+    ["Total Headers", "15"],
+    ["Total GCP Headers", "2"], 
+    ["Total IAP Headers", "7"], 
+    ["IAP JTW Verification", "verified | unverified | unverifiable"],
+];
+
+export const HEADER_CARD_KEYS = [
+    "Total Headers",
+    "Total GCP Headers", 
+    "Total IAP Headers",
+    "IAP JTW Verification"
+];

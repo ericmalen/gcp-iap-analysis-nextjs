@@ -7,6 +7,8 @@ import clsx from 'clsx';
 import Link from 'next/link';
 import { FILTERS } from '../lib/constants';
 
+// ADD SMT SO THAT WHEN CLICK ON PAGE DROPDOWN DISSAPEARS
+
 export function FilterResults() {
   const [isOpen, setBool] = useState(false);
   const searchParams = useSearchParams();
@@ -26,7 +28,7 @@ export function FilterResults() {
         <BarsArrowDownIcon className="h-5 md:ml-4" />
       </button>
       
-      {/* HIDE THIS */}
+      {/* DROPDOWN DIV */}
       <div className={clsx(
         "bg-gray-200 rounded-lg mt-0.5 px-0.5 z-50",
         {

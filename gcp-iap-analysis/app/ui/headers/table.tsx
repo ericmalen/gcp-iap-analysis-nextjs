@@ -1,8 +1,9 @@
-import { getFilteredHeaders } from '@/app/lib/data';
+import { getFilteredHeaders, getHeader } from '@/app/lib/data';
 import VerificationStatus from '../verification-status';
 import { validateIapToken } from '@/app/lib/auth';
 import { IAP_HEADER_KEY } from '@/app/lib/constants';
-import { getHeader } from '@/app/lib/data';
+
+// TODO ADD HEADER FOR NEW COL
 
 export default async function HeadersTable({
   query,
@@ -18,7 +19,7 @@ export default async function HeadersTable({
   const offset = currentResultsPerPage * (currentPage - 1);
   const filteredHeaders = getFilteredHeaders(query, filters);
   const iapHeaderVal = getHeader(IAP_HEADER_KEY);
-  const verificationStatus = await validateIapToken(iapHeaderVal);  
+  const isValidated = await validateIapToken(iapHeaderVal);
 
   return (
     <div className="mt-6 flow-root">
@@ -43,6 +44,16 @@ export default async function HeadersTable({
                         <p>{header[1]}</p>
                     </div>
                 </div>
+
+                <div className="flex w-full items-center justify-between pt-4">
+                    <div className="mb-2 flex items-center">
+                      {header[0] === IAP_HEADER_KEY ? (                
+                        <VerificationStatus status={isValidated} present={!iapHeaderVal}/>
+                      ) : 
+                        <VerificationStatus status={isValidated} present={!!iapHeaderVal}/>
+                      }
+                    </div>
+                </div>
               </div>
             ))}
           </div>
@@ -54,6 +65,9 @@ export default async function HeadersTable({
                 </th>
                 <th scope="col" className="grow px-3 py-5 font-medium">
                   Value
+                </th>
+                <th scope="col" className="flex justify-center min-w-40 px-3 py-5 font-medium">
+                  JWT Verification
                 </th>
               </tr>
             </thead>
@@ -72,12 +86,13 @@ export default async function HeadersTable({
                     {header[1]}
                   </td>
 
-                  {header[0] === IAP_HEADER_KEY ? (                
-                  <td className="flex px-3 py-3 min-w-48 justify-center items-center">
-                        <VerificationStatus status={verificationStatus}/>
-                  </td> 
-                  ) : <></>}
-                  
+                  <td className="flex justify-center px-3 py-3 min-w-40 items-center">
+                    {header[0] === IAP_HEADER_KEY ? (                
+                      <VerificationStatus status={isValidated} present={!iapHeaderVal}/>
+                    ) : 
+                      <VerificationStatus status={isValidated} present={!!iapHeaderVal}/>
+                    }
+                  </td>                  
                 </tr>
               ))}
             </tbody>
