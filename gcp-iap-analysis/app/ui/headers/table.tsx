@@ -1,9 +1,5 @@
-import { getFilteredHeaders, getHeader } from '@/app/lib/data';
+import { addVerification, getFilteredHeaders } from '@/app/lib/data';
 import VerificationStatus from '../verification-status';
-import { validateIapToken } from '@/app/lib/auth';
-import { IAP_HEADER_KEY } from '@/app/lib/constants';
-
-// TODO ADD HEADER FOR NEW COL
 
 export default async function HeadersTable({
   query,
@@ -18,16 +14,15 @@ export default async function HeadersTable({
 }) {
   const offset = currentResultsPerPage * (currentPage - 1);
   const filteredHeaders = getFilteredHeaders(query, filters);
-  const iapHeaderVal = getHeader(IAP_HEADER_KEY);
-  const isValidated = await validateIapToken(iapHeaderVal);
+  const verifiedFilters = await addVerification(filteredHeaders);
+  console.log(verifiedFilters);
 
   return (
     <div className="mt-6 flow-root">
       <div className="inline-block min-w-full align-middle">
-        {/* greyed out container holding the table */}
         <div className="rounded-lg bg-gray-100 p-2 md:pt-0">
           <div className="md:hidden">
-            {filteredHeaders?.slice(offset, offset + currentResultsPerPage).map((header) => (
+            {verifiedFilters?.slice(offset, offset + currentResultsPerPage).map((header) => (
               
               <div
                 key={header[0]}
@@ -47,11 +42,7 @@ export default async function HeadersTable({
 
                 <div className="flex w-full items-center justify-between pt-4">
                     <div className="mb-2 flex items-center">
-                      {header[0] === IAP_HEADER_KEY ? (                
-                        <VerificationStatus status={isValidated} present={!iapHeaderVal}/>
-                      ) : 
-                        <VerificationStatus status={isValidated} present={!!iapHeaderVal}/>
-                      }
+                      <VerificationStatus verification={header[2]}/>
                     </div>
                 </div>
               </div>
@@ -72,7 +63,7 @@ export default async function HeadersTable({
               </tr>
             </thead>
             <tbody className="bg-gray-50">
-              {filteredHeaders?.slice(offset, offset + currentResultsPerPage).map((header) => (
+              {verifiedFilters?.slice(offset, offset + currentResultsPerPage).map((header) => (
                 <tr
                   key={header[0]}
                   className="flex w-full border-b py-3 text-sm last-of-type:border-none [&:first-child>td:first-child]:rounded-tl-lg [&:first-child>td:last-child]:rounded-tr-lg [&:last-child>td:first-child]:rounded-bl-lg [&:last-child>td:last-child]:rounded-br-lg"
@@ -87,11 +78,7 @@ export default async function HeadersTable({
                   </td>
 
                   <td className="flex justify-center px-3 py-3 min-w-40 items-center">
-                    {header[0] === IAP_HEADER_KEY ? (                
-                      <VerificationStatus status={isValidated} present={!iapHeaderVal}/>
-                    ) : 
-                      <VerificationStatus status={isValidated} present={!!iapHeaderVal}/>
-                    }
+                    <VerificationStatus verification={header[2]}/>
                   </td>                  
                 </tr>
               ))}

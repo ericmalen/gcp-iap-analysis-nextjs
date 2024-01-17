@@ -2,27 +2,25 @@ import { ShieldCheckIcon, ShieldExclamationIcon, XMarkIcon } from '@heroicons/re
 import clsx from 'clsx';
 
 export default function VerificationStatus({ 
-  status, 
-  present 
+  verification
 }: { 
-  status: boolean;
-  present: boolean;
+  verification: string;
 }) {
   return (
     <p
       className={clsx(
         'inline-flex items-center rounded-full px-2 py-1 text-xs',
         {
-          'bg-red-500 text-white': status === false && present === true,
-          'bg-green-500 text-white': status === true,
-          'bg-gray-300 text-white': present === false && status === false,
+          'bg-red-500 text-white': verification === "unverified",
+          'bg-green-500 text-white': verification === "verified",
+          'bg-gray-300 text-white': verification === "unverifiable",
         },
       )}
     >
       
-      {status === false ? (
+      {verification !== "verified" ? (
         <>
-          {present === true ? (
+          {verification === "unverified" ? (
             <>
               JWT Unverified
               <ShieldExclamationIcon className="ml-1 w-4 text-white" />

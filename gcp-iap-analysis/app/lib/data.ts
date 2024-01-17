@@ -28,12 +28,6 @@ export const getFilteredPayload = async (query: string) => {
     return headerEntries?.filter((header) => header[0].includes(query) || header[1].includes(query));
 };
 
-export const getHeader = (key: string) => {
-    const headerList = headers();    
-    const header = headerList.get(key);
-    return header;
-};
-
 export const verification = (hasIapJwt: boolean, iapVerified:boolean) => {
     let verification ="";
     
@@ -49,23 +43,24 @@ export const verification = (hasIapJwt: boolean, iapVerified:boolean) => {
     return verification;
 }
 
-export const revVerification = (verification: string) => {
-    let isValidated = false;
-    let hasToken = false;
-    
-    if(verification === "verified"){
-        isValidated = true;
-        hasToken = true;
-    }
-    else if(verification === "unverified"){
-        isValidated = false;
-        hasToken = true;
-    }else{
-        isValidated = false;
-        hasToken = false;
+export const addVerification = async (headers: [string, string][]) => {
+    let verifiedHeaders = [];
+
+    for(let index in headers){
+        if(headers[index][0] === IAP_HEADER_KEY){
+            if(await validateIapToken(headers[index][0])){
+                verifiedHeaders.push([...headers[index], verification(true, true)])
+            }
+            else{
+                verifiedHeaders.push([...headers[index], verification(true, false)])
+            }
+        }
+        else{
+            verifiedHeaders.push([...headers[index], verification(false, false)])
+        }
     }
 
-    return [isValidated, hasToken];
+    return verifiedHeaders;
 }
 
 //figure out types - perfect example

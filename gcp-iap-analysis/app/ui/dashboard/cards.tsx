@@ -1,4 +1,4 @@
-import { getHeaderCardData, getRequestCardData, revVerification } from '@/app/lib/data';
+import { getHeaderCardData, getRequestCardData } from '@/app/lib/data';
 import { HEADER_CARD_KEYS, REQUEST_CARD_KEYS } from '@/app/lib/constants';
 import VerificationStatus from '../verification-status';
 
@@ -13,7 +13,7 @@ export default async function CardWrapper(){
       </>
     );
 }
-// CHECK NAV_LINKS FOR HOW TO DUPLICATE BETTER WITHOUT CONDITIONAL STATEMENT!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
 export function Card({
   type,
   title,
@@ -23,9 +23,6 @@ export function Card({
   title: string;
   data: (string | number | boolean)[];
 }) {
-  
-  
-  
   return (
     <>
         <div className="flex flex-col lg:row-span-4 rounded-md bg-gray-300">
@@ -50,13 +47,8 @@ export function Card({
 export function CardField({
   data,
 }: {
-  data: (string | number)[];
+  data: (string )[];
 }) {
-  let verificationValues = [false, false];
-  if(data[0] === "IAP JTW Verification" && typeof data[1] === "string"){
-    verificationValues = revVerification(data[1]);
-  }
-
   return (
     <div className="flex grow">
       <div className="flex items-center w-1/3">
@@ -64,12 +56,11 @@ export function CardField({
       </div>
       <div className="flex items-center w-2/3">
         {data[0] === "IAP JTW Verification" ? (
-          <VerificationStatus status={verificationValues[0]} present={verificationValues[1]}/>
+          <VerificationStatus verification={data[1]}/>
         ) :
         <p>{data[1]}</p>
         }
       </div>
-    
     </div>
   );
 }
