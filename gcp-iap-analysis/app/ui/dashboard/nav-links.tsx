@@ -13,7 +13,7 @@ import clsx from 'clsx';
 const links = [
   { name: 'Home', href: '/dashboard', icon: HomeIcon },
   { name: 'Request Headers', href: '/dashboard/headers', icon: ShareIcon },
-  { name: 'JWT Payload', href: '/dashboard/jtw-payload', icon: CircleStackIcon },
+  { name: 'JWT Payload', href: '/dashboard/payload', icon: CircleStackIcon },
 ];
 
 export default function NavLinks() {
