@@ -21,11 +21,14 @@ export const getFilteredPayload = async (query: string) => {
     const headerList = headers();
     const token = headerList.get("x-goog-iap-jwt-assertion");
     const payload = await getPayload(token);
-    //console.log(payload);
-
-    const headerEntries = Array.from(headerList.entries());    
-
-    return headerEntries?.filter((header) => header[0].includes(query) || header[1].includes(query));
+    const payloadArr: [string, string][] = [];
+    
+    if(payload){
+        for(const [key, value] of Object.entries(payload)){
+            payloadArr.push([key, String(value)]);
+        }
+    }
+    return payloadArr.filter((header) => header[0].includes(query) || header[1].includes(query));
 };
 
 export const verification = (hasIapJwt: boolean, iapVerified:boolean) => {

@@ -48,7 +48,7 @@ export default async function Page({
         
       </div>
  
-      <Table query={query} currentPage={currentPage} currentResultsPerPage={currentResultsPerPage} filters={filter}/>
+      <Table currentPage={currentPage} currentResultsPerPage={currentResultsPerPage} filteredHeaders={headers}/>
       
       <div className="mt-5 flex items-center justify-center">
         <div className="flex-1"></div>

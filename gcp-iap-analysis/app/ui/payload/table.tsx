@@ -1,7 +1,6 @@
 import { addVerification } from '@/app/lib/data';
-import VerificationStatus from '../verification-status';
 
-export default async function HeadersTable({
+export default async function PayloadTable({
   currentPage,
   currentResultsPerPage,
   filteredHeaders
@@ -35,12 +34,6 @@ export default async function HeadersTable({
                         <p>{header[1]}</p>
                     </div>
                 </div>
-
-                <div className="flex w-full items-center justify-between pt-4">
-                    <div className="mb-2 flex items-center">
-                      <VerificationStatus verification={header[2]}/>
-                    </div>
-                </div>
               </div>
             ))}
           </div>
@@ -52,9 +45,6 @@ export default async function HeadersTable({
                 </th>
                 <th scope="col" className="grow px-3 py-5 font-medium">
                   Value
-                </th>
-                <th scope="col" className="flex justify-center min-w-40 px-3 py-5 font-medium">
-                  JWT Verification
                 </th>
               </tr>
             </thead>
@@ -71,11 +61,7 @@ export default async function HeadersTable({
                   </td>
                   <td className="grow whitespace-wrap px-3 py-3 break-all max-w-2/4">
                     {header[1]}
-                  </td>
-
-                  <td className="flex justify-center px-3 py-3 min-w-40 items-center">
-                    <VerificationStatus verification={header[2]}/>
-                  </td>                  
+                  </td>                
                 </tr>
               ))}
             </tbody>

@@ -23,7 +23,7 @@ export const validateIapToken = async (token: string | null) => {
 
   export const getPayload = async (token: string | null) => {
     if(!token){
-        return null;
+      return null;
     } 
     try{
       const oAuth2Client = new OAuth2Client();
@@ -38,7 +38,6 @@ export const validateIapToken = async (token: string | null) => {
       return ticket.getPayload();
     } 
     catch(err){
-      console.log(err);  
       return false;
     }
   };
