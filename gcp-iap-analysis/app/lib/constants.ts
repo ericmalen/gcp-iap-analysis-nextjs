@@ -33,7 +33,7 @@ export const FILTERS = [
 export const REQUEST_CARD_KEYS = [
     "Host",
     "Location",
-    "Has IAP JTW",
+    "IAP Secured",
     "Operating System",
     "User Agent"
 ];

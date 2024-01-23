@@ -80,7 +80,7 @@ export const getHeaderCardData = async () => {
 
 export const getRequestCardData = (): (string | boolean)[] => {
     const allHeaders= headers();
-    const hasIapJwt = allHeaders.has("x-goog-iap-jwt-assertion") || "No";
+    const hasIapJwt = allHeaders.has("x-goog-iap-jwt-assertion") ? "Yes" : "No";
     const host = allHeaders.has("host") ? String(allHeaders.get("host")?.split(":")[0]) : "N/A";
     const location = allHeaders.has("x-client-geo-location") ? String(allHeaders.get("x-client-geo-location")) : "N/A";
     const operatingSys = allHeaders.has("sec-ch-ua-platform") ? String(allHeaders.get("sec-ch-ua-platform")) : "N/A";
