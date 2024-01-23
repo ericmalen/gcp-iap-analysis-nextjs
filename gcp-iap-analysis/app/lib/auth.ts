@@ -2,7 +2,7 @@ import { OAuth2Client } from 'google-auth-library';
 
 export const validateIapToken = async (token: string | null) => {
     if(!token){
-        return false;
+      return false;
     } 
     try{
       const oAuth2Client = new OAuth2Client();
@@ -15,8 +15,8 @@ export const validateIapToken = async (token: string | null) => {
           ['https://cloud.google.com/iap']
       );
     } 
-    catch(err){
-        return false;
+    catch(err){  
+      return false;
     }
     return true;
   };

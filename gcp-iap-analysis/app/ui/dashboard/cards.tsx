@@ -47,7 +47,7 @@ export function Card({
 export function CardField({
   data,
 }: {
-  data: (string )[];
+  data: (string)[];
 }) {
   return (
     <div className="flex grow">

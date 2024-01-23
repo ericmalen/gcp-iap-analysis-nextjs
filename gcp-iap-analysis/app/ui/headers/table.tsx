@@ -15,7 +15,6 @@ export default async function HeadersTable({
   const offset = currentResultsPerPage * (currentPage - 1);
   const filteredHeaders = getFilteredHeaders(query, filters);
   const verifiedFilters = await addVerification(filteredHeaders);
-  console.log(verifiedFilters);
 
   return (
     <div className="mt-6 flow-root">

@@ -21,7 +21,7 @@ export const getFilteredPayload = async (query: string) => {
     const headerList = headers();
     const token = headerList.get("x-goog-iap-jwt-assertion");
     const payload = await getPayload(token);
-    console.log(payload);
+    //console.log(payload);
 
     const headerEntries = Array.from(headerList.entries());    
 
@@ -36,7 +36,8 @@ export const verification = (hasIapJwt: boolean, iapVerified:boolean) => {
     }
     else if(hasIapJwt && !iapVerified){
         verification = "unverified";
-    }else{
+    }
+    else{
         verification = "verified";
     }
 
@@ -48,7 +49,7 @@ export const addVerification = async (headers: [string, string][]) => {
 
     for(let index in headers){
         if(headers[index][0] === IAP_HEADER_KEY){
-            if(await validateIapToken(headers[index][0])){
+            if(await validateIapToken(headers[index][1])){
                 verifiedHeaders.push([...headers[index], verification(true, true)])
             }
             else{
@@ -84,7 +85,6 @@ export const getRequestCardData = (): (string | boolean)[] => {
     const location = allHeaders.has("x-client-geo-location") ? String(allHeaders.get("x-client-geo-location")) : "N/A";
     const operatingSys = allHeaders.has("sec-ch-ua-platform") ? String(allHeaders.get("sec-ch-ua-platform")) : "N/A";
     const userAgent = allHeaders.has("user-agent") ? String(allHeaders.get("user-agent")?.split("/")[0]) : "N/A";
-    console.log([host, location, hasIapJwt, operatingSys, userAgent]);
     
     return [host, location, hasIapJwt, operatingSys, userAgent];
 };
