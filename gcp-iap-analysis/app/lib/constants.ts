@@ -4,7 +4,6 @@ export const IAP_HEADER_KEY = "x-goog-iap-jwt-assertion";
 
 export const GCP_HEADERS = [
     "traceparent", 
-    "forwarded", 
     "x-cloud-trace-context"
 ];
 
